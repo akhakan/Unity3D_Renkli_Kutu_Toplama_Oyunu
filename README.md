@@ -335,7 +335,7 @@ public class PlayerController : MonoBehaviour
         _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed, ForceMode.Force); 
     }
     
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // Toplanabilir kutu ile temas kontrolü
         if (other.CompareTag("Collectible"))

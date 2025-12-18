@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed, ForceMode.Force); 
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Collectible"))
         {
