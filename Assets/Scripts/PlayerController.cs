@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     
     private Vector3 _movementDirection; 
     
-    [SerializeField] private float _movementSpeed = 20f; 
+    [SerializeField] private float _movementSpeed = 10f; 
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             CollectibleBox box = other.GetComponent<CollectibleBox>();
             if (box != null)
             {
-                ScoreManager.instance.AddScore(box.scoreValue);
+                ScoreManager.instance.AddScore(box.ScoreValue);
                 Destroy(other.gameObject);
             }
         }

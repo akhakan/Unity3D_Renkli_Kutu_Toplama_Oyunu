@@ -33,8 +33,8 @@ public class BoxSpawner : MonoBehaviour
 
             if (collectible != null)
             {
-                collectible.boxColor = colors[randomIndex];
-                collectible.scoreValue = scoreValues[randomIndex];
+                collectible.BoxColor = colors[randomIndex];
+                collectible.ScoreValue = scoreValues[randomIndex];
             }
         }
     }

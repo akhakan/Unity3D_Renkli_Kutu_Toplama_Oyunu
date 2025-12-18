@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class CollectibleBox : MonoBehaviour
 {
-    public int scoreValue;
-    public Color boxColor;
+     private int scoreValue;
+     private Color boxColor;
+
+    public int ScoreValue { get; set; }
+    public Color BoxColor { get; set; }
 
     void Start()
     {
-        GetComponent<Renderer>().material.color = boxColor;
+        GetComponent<Renderer>().material.color = BoxColor;
     }
 }

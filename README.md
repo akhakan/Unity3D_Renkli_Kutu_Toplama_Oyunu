@@ -137,13 +137,16 @@ using UnityEngine;
 
 public class CollectibleBox : MonoBehaviour
 {
-    public int scoreValue;      // Kutunun puan değeri
-    public Color boxColor;      // Kutunun rengi
+    private int scoreValue;      
+    private Color boxColor;
+
+    public int ScoreValue { get; set; }      // Kutunun puan değeri
+    public Color BoxColor { get; set; }      // Kutunun rengi
     
     void Start()
     {
         // Kutunun rengini ata
-        GetComponent().material.color = boxColor;
+        GetComponent().material.color = BoxColor;
     }
 }
 ```
@@ -202,8 +205,8 @@ public class BoxSpawner : MonoBehaviour
             
             if (collectible != null)
             {
-                collectible.boxColor = colors[randomIndex];
-                collectible.scoreValue = scoreValues[randomIndex];
+                collectible.BoxColor = colors[randomIndex];
+                collectible.ScoreValue = scoreValues[randomIndex];
             }
         }
     }
@@ -307,7 +310,7 @@ public class PlayerController : MonoBehaviour
     
     private Vector3 _movementDirection;     // Hareket yönü
     
-    [SerializeField] private float _movementSpeed = 20f;    // Hareket hızı
+    [SerializeField] private float _movementSpeed = 10f;    // Hareket hızı
     
     private void Awake()
     {
@@ -342,7 +345,7 @@ public class PlayerController : MonoBehaviour
             if (box != null)
             {
                 // Puan ekle ve kutuyu yok et
-                ScoreManager.instance.AddScore(box.scoreValue);
+                ScoreManager.instance.AddScore(box.ScoreValue);
                 Destroy(other.gameObject);
             }
         }
