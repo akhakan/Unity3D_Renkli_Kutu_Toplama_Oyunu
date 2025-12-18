@@ -58,7 +58,7 @@ Unity Hub → New Project → 3D Template → Create
 - **Add Component** → **Rigidbody**
   - Constraints: Freeze Rotation **X, Y, Z** ✓
 - `PlayerController.cs` scriptini ekle
-- Cinemachine Third Person kamera ayarları yap
+- Cinemachine Third Person Aim Camera ayarları yap
 
 #### 3. Toplanabilir Kutu Prefab
 - **Hierarchy** → **3D Object** → **Cube**
@@ -89,6 +89,10 @@ Unity Hub → New Project → 3D Template → Create
   - Font Style: **Bold**
   - Color (HEX): **#8B008B** (Mor)
   - Anchor Preset: **Top Left**
+  - PosX: **20**, PosY: **-15**
+  - Width: **350**, Height: **60**
+  - Auto Size: ✓
+  - Font Asset: `Lost Tumbler SDF`
 
 #### 6. Game Manager Kurulumu
 - **Hierarchy** → Boş GameObject oluştur
