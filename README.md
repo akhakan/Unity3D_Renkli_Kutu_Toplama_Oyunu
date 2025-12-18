@@ -1,4 +1,4 @@
-# 🎮 Renkli_Kutu_Toplama_Oyunu (Unity Sınav2 Projesi)
+# 🎮 Unity3D_Renkli_Kutu_Toplama_Oyunu
 
 ## 🎯 Oyun Hakkında
 
