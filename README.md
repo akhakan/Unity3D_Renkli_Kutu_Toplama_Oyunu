@@ -7,9 +7,9 @@ Bu proje, Unity 3D kullanılarak geliştirilmiş basit ve eğlenceli bir kutu to
 ## 🖼️ Oyun Görselleri
 
 <p align="left">
-  <img src="ReadMeImages/kt1.png" alt="Resim1"  width:45%; object-fit:cover;"/>
-  <img src="ReadMeImages/kt2.png" alt="Resim2"  width:45%; object-fit:cover;"/>
-  <img src="ReadMeImages/kt3.png" alt="Resim3"  width:45%; object-fit:cover;"/>
+  <img src="ReadMeImages/kt1.jpg" alt="Resim1"  width:45%; object-fit:cover;"/>
+  <img src="ReadMeImages/kt2.jpg" alt="Resim2"  width:45%; object-fit:cover;"/>
+  <img src="ReadMeImages/kt3.jpg" alt="Resim3"  width:45%; object-fit:cover;"/>
 </p>
 
 ## ✨ Özellikler
