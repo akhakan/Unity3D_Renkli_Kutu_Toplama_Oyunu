@@ -117,7 +117,7 @@ Assets/
 ├── Prefabs/
 │   └── CollectibleBox.prefab    # Toplanabilir kutu prefab'ı
 └── Scenes/
-    └── SampleScene.unity          # Ana oyun sahnesi
+    └── SampleScene.unity        # Ana oyun sahnesi
 ```
 
 ## 💻 Kod Yapısı ve Açıklamalar
