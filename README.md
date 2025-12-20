@@ -137,9 +137,6 @@ using UnityEngine;
 
 public class CollectibleBox : MonoBehaviour
 {
-    private int scoreValue;      
-    private Color boxColor;
-
     public int ScoreValue { get; set; }      // Kutunun puan değeri
     public Color BoxColor { get; set; }      // Kutunun rengi
     
