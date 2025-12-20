@@ -404,12 +404,27 @@ public class ScoreManager : MonoBehaviour
 
 ```
 
+### Animasyonun İşleyişi:
+1. ⏱️ 0.5 saniye boyunca çalışır
+2. 🔢 Her frame'de ara değer hesaplar (Lerp)
+3. 📱 Ekranı günceller
+4. ⏸️ yield return null ile bir sonraki frame'i bekler
+5. ✅ Son değeri garantilemek için tekrar yazar
+
+### Kullanıcı Tarafından Görünen:
+```
+Skor: 100 → 110 → 125 → 140 → 150 (Yumuşak geçiş!)
+```
+
+
 **📌 Önemli Noktalar:**
 
 - **Singleton Pattern**: Oyunda tek bir ScoreManager instance'ı olmasını garanti eder
 - `AddScore()`: Dışarıdan çağrılarak puan eklemek için kullanılır
 - `UpdateScoreUI()`: Her puan değişiminde TextMeshPro text'ini günceller
-- `GetScore()`: Diğer scriptlerin mevcut skoru okuması için kullanılır
+- `TotalScore`: Diğer scriptlerin mevcut skoru okuması için kullanılır
+- `AnimateScore(int start, int end)`: Skor değişimini yumuşak geçişle gösteren coroutine metodu
+- `StartCoroutine()`: Unity'de zaman içinde (frame'ler boyunca) çalışan coroutine'leri başlatan metod
 
 ---
 
