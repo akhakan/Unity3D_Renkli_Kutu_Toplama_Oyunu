@@ -224,21 +224,21 @@ public class BoxSpawner : MonoBehaviour
                 Random.Range(-spawnRange, spawnRange)
             );
             
-            // Kutuyu oluştur
-            // Instantiate, Unity'de çalışma zamanında (runtime) yeni obje kopyaları oluşturmak için kullanılan temel bir metoddur.
+            // Kutuyu oluştur. ✅ Parent(BoxSpawner) olarak bu GameObject'i belirt.
+            // `Instantiate`, Unity'de çalışma zamanında (runtime) yeni obje kopyaları oluşturmak için kullanılan temel bir metoddur.
             // Bir şablondan (Prefab veya mevcut GameObject) yeni bir kopya oluşturur ve sahneye ekler.
-            // boxPrefab → Kopyalanacak şablon
-            // randomPosition → Yeni objenin konumu(Vector3)
-            // Quaternion.identity → Rotasyon(0, 0, 0 açıları = döndürme yok)
-            // Açı verilmek istenirse : Quaternion.Euler(0, 45, 0), // 45° Y ekseninde dönük
-            // transform: Yeni objelerin, bu script'in bağlı olduğu objenin child'ı olur.             
+            // `boxPrefab` → Kopyalanacak şablon
+            // `randomPosition` → Yeni objenin konumu(Vector3)
+            // `Quaternion.identity` → Rotasyon(0, 0, 0 açıları = döndürme yok)
+            // Açı verilmek istenirse : `Quaternion.Euler(0, 45, 0)`, // 45° Y ekseninde dönük
+            // `transform`: Yeni objeler, bu script'in bağlı olduğu objenin(BoxSpawner) child'ı olur.             
             // Özetle:
-            // boxPrefab şablonundan yeni bir kutu kopyalar
-            // randomPosition konumuna yerleştirir
-            // Rotasyon vermez(düz durur)
-            // Eklenen objeler BoxSpawner(parent) GameObject'in child'ı olur
-            // box değişkenine referansı kaydeder
-            // Sonraki satırlarda box.GetComponent<CollectibleBox>() ile erişim sağlar
+            // ✅ `boxPrefab` şablonundan yeni bir kutu kopyalar
+            // ✅ `randomPosition` konumuna yerleştirir
+            // ✅ Rotasyon vermez(düz durur)
+            // ✅ Eklenen objeler BoxSpawner(parent) GameObject'in child'ı olur
+            // ✅ `box` değişkenine referansı kaydeder
+            // ✅ Sonraki satırlarda `box.GetComponent<CollectibleBox>()` ile erişim sağlar
             GameObject box = Instantiate(boxPrefab, randomPosition, Quaternion.identity,transform);
             
             // Rastgele renk ve puan değeri ata
@@ -257,7 +257,7 @@ public class BoxSpawner : MonoBehaviour
 
 **📌 Önemli Noktalar:**
 - `numberOfBoxes`: Inspector'dan ayarlanabilir kutu sayısı (varsayılan: 20)
-- `spawnRange`: Kutların oluşturulacağı alan büyüklüğü (-20 ile +20 arası)
+- `spawnRange`: Kutuların oluşturulacağı alan büyüklüğü (-20 ile +20 arası)
 - `colors` ve `scoreValues` dizileri paralel çalışır (aynı index aynı renk-puan eşleşmesi)
 - Her kutu Y ekseninde 0.5 yükseklikte oluşturulur (zeminin hemen üstü)
 

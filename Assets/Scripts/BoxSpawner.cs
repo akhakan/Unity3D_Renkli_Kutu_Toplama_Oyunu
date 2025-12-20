@@ -2,9 +2,9 @@
 
 public class BoxSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject boxPrefab;
-    [SerializeField] private int numberOfBoxes = 20;
-    [SerializeField] private float spawnRange = 20f;
+    [SerializeField] private GameObject boxPrefab;      // Kutu prefab referansı
+    [SerializeField] private int numberOfBoxes = 20;    // Oluşturulacak kutu sayısı
+    [SerializeField] private float spawnRange = 20f;    // Spawn alanı genişliği
 
     // Renk ve puan değerleri
     private Color[] colors = { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta };
@@ -19,6 +19,7 @@ public class BoxSpawner : MonoBehaviour
     {
         for (int i = 0; i < numberOfBoxes; i++)
         {
+            // Rastgele pozisyon hesapla
             Vector3 randomPosition = new Vector3(
                 Random.Range(-spawnRange, spawnRange),
                 0.5f,
