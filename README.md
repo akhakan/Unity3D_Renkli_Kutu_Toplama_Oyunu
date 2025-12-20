@@ -22,6 +22,7 @@ Bu proje, Unity 3D kullanılarak geliştirilmiş basit ve eğlenceli bir kutu to
 - **TextMeshPro UI**: Modern ve şık kullanıcı arayüzü
 
 ### Puan Sistemi
+
 | Renk | Puan Değeri |
 |------|-------------|
 | 🔴 Kırmızı | 10 puan |
@@ -31,6 +32,7 @@ Bu proje, Unity 3D kullanılarak geliştirilmiş basit ve eğlenceli bir kutu to
 | 🟣 Mor | 100 puan |
 
 ### Oyun Akışı
+
 1. Oyun başladığında sahada 20 adet rastgele renkli kutu oluşur
 2. Karakterinizi kutulara doğru hareket ettirin
 3. Kutulara temas ettiğinizde kutular kaybolur ve puan kazanırsınız
@@ -39,6 +41,7 @@ Bu proje, Unity 3D kullanılarak geliştirilmiş basit ve eğlenceli bir kutu to
 ## 🛠️ Kurulum
 
 ### Gereksinimler
+
 - Unity 6.1 veya üzeri
 - TextMeshPro paketi
 - Cinemachine paketi (kamera kontrolü için)
@@ -46,11 +49,13 @@ Bu proje, Unity 3D kullanılarak geliştirilmiş basit ve eğlenceli bir kutu to
 ### Adım Adım Kurulum
 
 #### 1. Yeni Proje Oluşturma
+
 ```
 Unity Hub → New Project → 3D Template → Create
 ```
 
 #### 2. Oyuncu (Player) Kurulumu
+
 - **Hierarchy** → Sağ tık → **3D Object** → **Capsule**
 - İsim: `Player`
 - Tag: `Player`
@@ -61,6 +66,7 @@ Unity Hub → New Project → 3D Template → Create
 - Cinemachine Third Person Aim Camera ayarları yap
 
 #### 3. Toplanabilir Kutu Prefab
+
 - **Hierarchy** → **3D Object** → **Cube**
 - İsim: `CollectibleBox`
 - Tag: `Collectible` (yeni tag oluştur)
@@ -72,11 +78,13 @@ Unity Hub → New Project → 3D Template → Create
 - Hierarchy'den orijinali sil
 
 #### 4. Zemin Oluşturma
+
 - **3D Object** → **Plane**
 - Scale: `(5, 1, 5)`
 - Position: `(0, 0, 0)`
 
 #### 5. UI (Skor Sistemi)
+
 - **Hierarchy** → **UI** → **Canvas**
   - Canvas Scaler ayarları:
     - UI Scale Mode: **Scale With Screen Size**
@@ -95,12 +103,14 @@ Unity Hub → New Project → 3D Template → Create
   - Font Asset: `Lost Tumbler SDF`
 
 #### 6. Game Manager Kurulumu
+
 - **Hierarchy** → Boş GameObject oluştur
 - İsim: `GameManager`
 - `ScoreManager.cs` scriptini ekle
 - Inspector'da **Score Text** alanına `ScoreText` objesini sürükle
 
 #### 7. Box Spawner Kurulumu
+
 - **Hierarchy** → Boş GameObject oluştur
 - İsim: `BoxSpawner`
 - `BoxSpawner.cs` scriptini ekle
@@ -125,6 +135,7 @@ Assets/
 ## 🔧 Teknik Detaylar
 
 ### Script İlişkileri
+
 ```
 BoxSpawner
     ↓ (Instantiate)
@@ -140,6 +151,7 @@ TextMeshPro UI
 ---
 
 ### Çalışma Mantığı
+
 1. **Başlangıç**: `BoxSpawner` 20 adet `CollectibleBox` oluşturur
 2. **Renklendirme**: Her kutu `Start()` metodunda kendi rengini alır
 3. **Hareket**: Oyuncu `PlayerController` ile karakteri hareket ettirir
@@ -195,6 +207,7 @@ public class CollectibleBox : MonoBehaviour
 🎯 **Amaç:** Oyun başladığında belirlenen sayıda rastgele konumlarda, rastgele renk ve puan değerlerine sahip kutular oluşturur.
 
 🧩 **Kod:**
+
 ```csharp
 using UnityEngine;
 
@@ -256,6 +269,7 @@ public class BoxSpawner : MonoBehaviour
 ```
 
 **📌 Önemli Noktalar:**
+
 - `numberOfBoxes`: Inspector'dan ayarlanabilir kutu sayısı (varsayılan: 20)
 - `spawnRange`: Kutuların oluşturulacağı alan büyüklüğü (-20 ile +20 arası)
 - `colors` ve `scoreValues` dizileri paralel çalışır (aynı index aynı renk-puan eşleşmesi)
@@ -271,58 +285,120 @@ public class BoxSpawner : MonoBehaviour
 
 🎯 **Amaç:** Singleton pattern kullanarak tüm oyun boyunca puan sistemini yönetir. Toplam puanı takip eder ve UI'ı günceller.
 
+#### 🎯 Singleton Pattern Nedir?
+
+**Tanım:** Bir sınıftan **sadece tek bir obje** olmasını garantiler.
+
+**Neden Gerekli?**
+```
+Sahne 1'de ScoreManager var (Skor: 50)
+      ↓
+Sahne 2'ye geçiliyor
+      ↓
+Yeni ScoreManager oluşturulursa → Skor sıfırlanır! ❌
+
+Singleton ile → Eski ScoreManager korunur → Skor: 50 devam eder ✅
+```
+
+#### Açıklama:
+
+```
+Oyun Başlangıcı:
+instance = null
+
+ScoreManager A oluşturuldu:
+instance = null → A'yı instance yap
+instance = A ✅
+
+ScoreManager B oluşturulmaya çalışıldı:
+instance = A (zaten var!)
+B'yi yok et → Destroy(B) ❌
+
+2. Start() - Başlangıç
+csharpvoid Start()
+{
+    UpdateScoreUI();
+}
+
 🧩 **Kod:**
+
 ```csharp
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    // public → Herkes erişebilir
+    // static → Sınıfa ait (objeye değil), bellekte tek bir kopya var
+    // Her yerden ScoreManager.instance ile erişilebilir
     public static ScoreManager instance;    // Singleton instance
-    
+
     [SerializeField] private TMP_Text scoreText;    // Skor text referansı
+
     private int totalScore = 0;                     // Toplam puan
-    
+
+    // Property kullanarak toplam skoru almak(get işlemi)
+    public int TotalScore => totalScore;                 // Toplam puanı döndür
+
+
     void Awake()
     {
         // Singleton pattern implementasyonu
-        if (instance == null)
+        if (instance == null)     // Henüz ScoreManager yoksa
         {
-            instance = this;
+            instance = this;      // Bu objeyi instance yap
         }
-        else
+        else                      // Zaten bir ScoreManager varsa
         {
-            Destroy(gameObject);
+            Destroy(gameObject);  // Bu kopya objeyi yok et!
         }
     }
-    
+
+    // Oyun başladığında 1 kez çalışır
+    // UpdateScoreUI() çağırarak ekranda "Skor: 0" gösterir
     void Start()
     {
         UpdateScoreUI();
     }
-    
+
     // Puan ekle
+    // Başka Script'ten şu şekilde çağrılır : ScoreManager.instance.AddScore(scoreValue);
     public void AddScore(int points)
     {
+        StartCoroutine(AnimateScore(totalScore, totalScore + points));
         totalScore += points;
         UpdateScoreUI();
     }
-    
+
     // UI'ı güncelle
     void UpdateScoreUI()
     {
         scoreText.text = "Skor: " + totalScore;
     }
-    
-    // Toplam puanı döndür
-    public int GetScore()
+
+    IEnumerator AnimateScore(int start, int end)
     {
-        return totalScore;
+        float duration = 0.5f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            int current = (int)Mathf.Lerp(start, end, elapsed / duration);
+            scoreText.text = "Skor: " + current;
+            yield return null;
+        }
+
+        scoreText.text = "Skor: " + end;
     }
+
 }
+
 ```
 
 **📌 Önemli Noktalar:**
+
 - **Singleton Pattern**: Oyunda tek bir ScoreManager instance'ı olmasını garanti eder
 - `AddScore()`: Dışarıdan çağrılarak puan eklemek için kullanılır
 - `UpdateScoreUI()`: Her puan değişiminde TextMeshPro text'ini günceller
@@ -339,6 +415,7 @@ public class ScoreManager : MonoBehaviour
 🎯 **Amaç:** Oyuncu karakterinin hareket kontrolünü sağlar. Rigidbody fizik sistemi kullanarak WASD/Ok tuşları ile hareket imkanı verir. Ayrıca kutularla temas algılaması yapar.
 
 🧩 **Kod:**
+
 ```csharp
 using UnityEngine;
 
@@ -396,6 +473,7 @@ public class PlayerController : MonoBehaviour
 ```
 
 **📌 Önemli Noktalar:**
+
 - **Rigidbody Kontrolü**: Fizik tabanlı hareket için `AddForce()` kullanır
 - **Kamera Bazlı Hareket**: `_orientationTransform` sayesinde hareket kamera yönüne göre olur
 - `Update()`: Input'ları her frame okur
