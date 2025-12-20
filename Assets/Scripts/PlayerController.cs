@@ -43,14 +43,14 @@ public class PlayerController : MonoBehaviour
             {
                 ScoreManager.instance.AddScore(box.ScoreValue);
                 // Patlama efekti(isteðe baðlý)
-                Explode(explosionPrefab);
+                Explode(other);
 
                 Destroy(other.gameObject);
             }
         }
     }
 
-    void Explode(GameObject other)
+    void Explode(Collider other)
     {
         Renderer rend = other.GetComponent<Renderer>();
         Color boxColor = rend.material.color;
