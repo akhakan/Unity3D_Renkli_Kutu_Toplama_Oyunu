@@ -420,11 +420,11 @@ Skor: 100 → 110 → 125 → 140 → 150 (Yumuşak geçiş!)
 **📌 Önemli Noktalar:**
 
 - **Singleton Pattern**: Oyunda tek bir ScoreManager instance'ı olmasını garanti eder
-- `AddScore()`: Dışarıdan çağrılarak puan eklemek için kullanılır
+- `AddScore()`: Dışarıdan çağrılarak puan ekler ve animasyon başlatır
 - `UpdateScoreUI()`: Her puan değişiminde TextMeshPro text'ini günceller
-- `TotalScore`: Diğer scriptlerin mevcut skoru okuması için kullanılır
-- `AnimateScore(int start, int end)`: Skor değişimini yumuşak geçişle gösteren coroutine metodu
-- `StartCoroutine()`: Unity'de zaman içinde (frame'ler boyunca) çalışan coroutine'leri başlatan metod
+- `TotalScore`: Diğer scriptlerin mevcut skoru okuması için property (read-only)
+- `AnimateScore(int start, int end)`: Puan artışını 0.5 saniyede animasyonlu gösterir (coroutine)
+- `StartCoroutine(IEnumerator)`: Zaman içinde (frame'ler boyunca) çalışan coroutine'leri başlatır
 
 ---
 
