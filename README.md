@@ -383,7 +383,7 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Skor: " + totalScore;
     }
 
-    // ✨ Animasyonlu kısmı (Bonus):
+    // ✨ Animasyon kısmı (Bonus):
     IEnumerator AnimateScore(int start, int end)
     {
         float duration = 0.5f;
