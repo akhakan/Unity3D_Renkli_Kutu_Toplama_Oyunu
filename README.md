@@ -117,8 +117,37 @@ Assets/
 ├── Prefabs/
 │   └── CollectibleBox.prefab    # Toplanabilir kutu prefab'ı
 └── Scenes/
-    └── SampleScene.unity          # Ana oyun sahnesi
+    └── SampleScene.unity        # Ana oyun sahnesi
 ```
+
+---
+
+## 🔧 Teknik Detaylar
+
+### Script İlişkileri
+```
+BoxSpawner
+    ↓ (Instantiate)
+CollectibleBox (Prefab)
+    ↓ (Collision)
+PlayerController
+    ↓ (AddScore)
+ScoreManager
+    ↓ (Update UI)
+TextMeshPro UI
+```
+
+---
+
+### Çalışma Mantığı
+1. **Başlangıç**: `BoxSpawner` 20 adet `CollectibleBox` oluşturur
+2. **Renklendirme**: Her kutu `Start()` metodunda kendi rengini alır
+3. **Hareket**: Oyuncu `PlayerController` ile karakteri hareket ettirir
+4. **Toplama**: Karakter kutuya temas edince `OnTriggerEnter()` tetiklenir
+5. **Puan**: `ScoreManager.AddScore()` çağrılır ve UI güncellenir
+6. **Yok Etme**: Kutu sahneden `Destroy()` ile silinir
+
+---
 
 ## 💻 Kod Yapısı ve Açıklamalar
 
