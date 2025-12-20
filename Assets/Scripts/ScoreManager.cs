@@ -41,8 +41,14 @@ public class ScoreManager : MonoBehaviour
     // Başka Script'ten şu şekilde çağrılır : ScoreManager.instance.AddScore(scoreValue);
     public void AddScore(int points)
     {
+        // 1. ADIM: Coroutine başlat
         StartCoroutine(AnimateScore(totalScore, totalScore + points));
-        totalScore += points;
+        //                              ↓           ↓
+        //                          başlangıç     hedef
+        //                             100         150
+
+        // 2. ADIM: Gerçek skoru hemen güncelle
+        totalScore += points; // totalScore = 100 + 50 = 150
         UpdateScoreUI();
     }
 
@@ -52,20 +58,30 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Skor: " + totalScore;
     }
 
+    //                 Başlangıç skoru  Hedef skor
+    //                             ↓         ↓
     IEnumerator AnimateScore(int start, int end)
     {
-        float duration = 0.5f;
-        float elapsed = 0f;
+        Vector3 originalScale = scoreText.transform.localScale;
 
-        while (elapsed < duration)
+        float duration = 0.5f;          // Animasyon süresi (0.5 saniye)
+        float elapsed = 0f;             // Geçen zaman
+       
+
+        while (elapsed < duration)      // 0.5 saniye dolana kadar döngü
         {
-            elapsed += Time.deltaTime;
+            // 1. Geçen zamanı güncelle
+            elapsed += Time.deltaTime;  // Time.deltaTime : Bir önceki frame'den bu yana geçen süre (saniye cinsinden)
+            // 2. Ara değeri hesapla
             int current = (int)Mathf.Lerp(start, end, elapsed / duration);
+            // 3. Ekranı güncelle
             scoreText.text = "Skor: " + current;
+            // 4. Bir sonraki frame'i bekle
             yield return null;
         }
-
-        scoreText.text = "Skor: " + end;
+        // Döngü bitti, son kontrol.
+        // Sebebi matematiksel hesaplamalardan kaynaklı son değerin `end` değeri olduğundan emin olmak.
+        scoreText.text = "Skor: " + end; // Kesin değer. Örnek: end->150 ise "Skor: 150" olur.
     }
 
 }
